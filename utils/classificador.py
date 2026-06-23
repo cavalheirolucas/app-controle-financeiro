@@ -75,7 +75,7 @@ def _classificar_ia(descricao):
         api_key=os.environ.get("OPENAI_API_KEY"),
     )
         
-        resultado = {}
+        
         prompt = f""" 
                 Classifier each description with one category
                 Categories: {CATEGORIAS}
@@ -88,6 +88,7 @@ def _classificar_ia(descricao):
 
         completion = client.chat.completions.create(
         model="gpt-5.5",
+        response_format={"type": "json_object"},
         messages=[
                 {"role": "system", "content": "Return a valide json"},
                 {
