@@ -71,11 +71,10 @@ if file:
 
         with st.spinner("Classificando transações..."):
             descricoes = df['descricao'].unique().tolist()
-            classificacoes = classificar_lote(descricoes)
-            df['categoria'] = df['descricao'].map(classificacoes)
+            resultado = classificar_lote(descricoes)
+            df['categoria'] = df['descricao'].map(resultado)
 
         st.session_state['df_processado'] = df
-
 
     #--------------------------------
 

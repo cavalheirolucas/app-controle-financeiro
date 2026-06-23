@@ -69,37 +69,40 @@ def _classificar_regras(descricao):
         
 
 def _classificar_ia(descricao):
-    client = OpenAI(
-    # This is the default and can be omitted
-    api_key=os.environ.get("OPENAI_API_KEY"),
-)
-    
-    resultado = {}
-    prompt = f""" 
-            Classifier each description with one category
-            Categories: {CATEGORIAS}
-            Descriptions: {descricao}
-
-            Answer with only one category!
-        
-        """ 
-
-
-    completion = client.chat.completions.create(
-    model="gpt-5.5",
-    messages=[
-            {"role": "system", "content": "Return a valide json"},
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
+    try:
+        client = OpenAI(
+        # This is the default and can be omitted
+        api_key=os.environ.get("OPENAI_API_KEY"),
     )
-    resultado = json.loads(
-    completion.choices[0].message.content
-)
+        
+        resultado = {}
+        prompt = f""" 
+                Classifier each description with one category
+                Categories: {CATEGORIAS}
+                Descriptions: {descricao}
 
-    return resultado
+                Answer with only one category!
+            
+            """ 
+
+
+        completion = client.chat.completions.create(
+        model="gpt-5.5",
+        messages=[
+                {"role": "system", "content": "Return a valide json"},
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+            ],
+        )
+        return json.loads(
+        completion.choices[0].message.content
+    )
+
+    except Exception as e:
+        print(f"Erro ao classificar com IA: {e}")
+        return {}
 
 
 
@@ -140,10 +143,9 @@ def classificar_lote(descricoes):
     result = _classificar_ia(sem_cache)
     sem_ia = []
     for descricao in sem_cache:
-        if descricao in result:
-            resultado[descricao] = result[descricao]
-        else:
-            sem_ia.append(descricao) 
+        resultado[descricao] = result[descricao]
+    else:
+        sem_ia.append(descricao) 
 
 
     
