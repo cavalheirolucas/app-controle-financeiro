@@ -73,7 +73,7 @@ with col_esq:
     desp = df[df['tipo'] == 'despesa']
 
     if not desp.empty:
-        por_cat = desp.groupby("Categoria")["Valor"].sum().reset_index()
+        por_cat = desp.groupby("categoria")["valor"].sum().reset_index()
         fig1 = px.pie(
             por_cat,
             values = 'Valor',
@@ -93,7 +93,7 @@ with col_dir:
 
      if not desp.empty:
         desp["mes"] = desp["data"].dt.to_period('M').astype('str')
-        por_mes = desp.groupby("mes")["Valor"].sum().reset_index()
+        por_mes = desp.groupby("mes")["valor"].sum().reset_index()
         fig2 = px.bar(
             por_mes,
             x="mes",
