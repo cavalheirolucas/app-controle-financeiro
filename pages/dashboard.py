@@ -76,8 +76,8 @@ with col_esq:
         por_cat = desp.groupby("categoria")["valor"].sum().reset_index()
         fig1 = px.pie(
             por_cat,
-            values = 'Valor',
-            names = 'Categoria',
+            values = 'valor',
+            names = 'categoria',
             hole = 0.45,
             color_discrete_sequence=px.colors.qualitative.Set3
         )
