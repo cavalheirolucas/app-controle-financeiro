@@ -79,7 +79,7 @@ with col_esq:
             values = 'Valor',
             names = 'Categoria',
             hole = 0.45,
-            color_discrete_sequence=px.colors.qualitative.Set
+            color_discrete_sequence=px.colors.qualitative.Set3
         )
         st.plotly_chart(fig1, use_container_width=True)
     else:
